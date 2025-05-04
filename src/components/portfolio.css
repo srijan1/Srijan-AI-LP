@@ -1,0 +1,16 @@
+/* c:\Users\hp\Documents\Srijan-AI-LP\src\components\portfolio.css */
+
+.card-hover {
+  /* Smooth transition for transform and shadow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card-hover:hover {
+  /* Lift the card slightly on hover */
+  transform: translateY(-5px);
+  /* Optional: Add a subtle shadow for more depth */
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); */
+  /* Using Tailwind's shadow classes might be more consistent if preferred */
+}
+
+/* Note: The image scaling is handled by Tailwind's group-hover:scale-105 in Portfolio.jsx */
