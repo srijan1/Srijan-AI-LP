@@ -185,5 +185,5 @@ export default defineConfig({
 			'@': path.resolve(__dirname, './src'),
 		},
 	},
-	base: '/srijan1/', // Replace <repository-name> with your GitHub repo name
+	base: '/Srijan-AI-LP/', // Replace <repository-name> with your GitHub repo name
 });
