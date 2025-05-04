@@ -10,10 +10,38 @@
 const {onRequest} = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+const functions = require('firebase-functions');
+const nodemailer = require('nodemailer');
+const cors = require('cors')({ origin: true });
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+// Configure your email transport using SMTP (e.g., Gmail, Outlook, etc.)
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'your.email@gmail.com', // your email
+    pass: 'your_app_password',    // use App Password, not your real password
+  },
+});
+
+exports.sendContactEmail = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    if (req.method !== 'POST') {
+      return res.status(405).send('Method Not Allowed');
+    }
+    const { name, email, subject, message } = req.body;
+
+    const mailOptions = {
+      from: email,
+      to: 'support@srijan-ai.in',
+      subject: `Contact Form: ${subject}`,
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).send(error.toString());
+      }
+      return res.status(200).send('Email sent: ' + info.response);
+    });
+  });
+});
